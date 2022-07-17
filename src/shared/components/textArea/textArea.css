@@ -1,0 +1,28 @@
+.label{
+    color: #463649;
+    font-weight: 600;
+    text-align: left;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding-bottom: 20px;
+}
+
+.textArea{
+    width: 100%;
+    height: 4rem;
+    padding-left: 1.7rem !important;
+    padding-top: 1.3rem !important;
+    border: 1px solid #463649;
+    border-radius: 10px;
+    background-color: rgba(250, 243, 247, 0.54) !important;
+    border-radius: 8px !important;
+    color: #333333 !important
+}
+
+::placeholder {
+    color: #b3acb4 !important;
+}
+
+.ant-form-item-label > label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
+    display: none !important;
+}

@@ -1,80 +1,66 @@
 import React from 'react';
-import { Modal, Button, Form, Input } from 'antd';
+import { Modal, Row, Col, Typography, Button } from 'antd';
+import { stopEventPropagation } from '../../utils/helper';
 
-// const {Paragraph} = Typography;
+import {CloseOutlined} from '@ant-design/icons';
+import "./modal.css";
 
-interface CustomModalProps {
-    isVisible: boolean,
-    handleOk: () => void,
-    handleCancel: () => void,
-    quotes: any,
-    setQuotes: any
+const { Title, Paragraph } = Typography;
+interface props {
+    show: boolean,
+    close: () => void,
+    width?: number | undefined,
+    title?: string,
+    description?: string,
+    btnText?: string,
+    btnAction?: () => void,
+    children?: any,
+    textAlign?: any
 }
 
-const CustomModal: React.FC<CustomModalProps> = ({ isVisible, handleOk, handleCancel, quotes, setQuotes}) => {
-    const [form] = Form.useForm();
-    
-    const onFinish = (values: any) => {
-        setQuotes([values, ...quotes])
-        handleOk()
-        form.resetFields();
-    };
-
+const CustomModal: React.FC<props> = ({ show, close, width, title, description, btnText, btnAction, children, textAlign }) => {
     return (
-        <>
-            <Modal title="Add a quote" visible={isVisible} onOk={handleOk} onCancel={handleCancel}>
-                <Form
-                    name="basic"
-                    labelCol={{ span: 8 }}
-                    wrapperCol={{ span: 16 }}
-                    initialValues={{ remember: true }}
-                    onFinish={onFinish}
-                    autoComplete="off"
-                    form={form}
-                >
-                    <Form.Item
-                        label="Author Name"
-                        name="author"
-                        rules={[{ required: true, message: 'Please input your username!' }]}
-                    >
-                        <Input />
-                    </Form.Item>
-
-                    <Form.Item
-                        label="Slug"
-                        name="authorSlug"
-                        rules={[{ required: true, message: 'Please input your username!' }]}
-                    >
-                        <Input />
-                    </Form.Item>
-
-                    <Form.Item
-                        label="Year"
-                        name="dateAdded"
-                        rules={[{ required: true, message: 'Please input your username!' }]}
-                    >
-                        <Input />
-                    </Form.Item>
-
-                    <Form.Item
-                        label="Quote"
-                        name="content"
-                        rules={[{ required: true, message: 'Please input your username!' }]}
-                    >
-                        <Input />
-                    </Form.Item>
-
-                    <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                        <Button type="primary" htmlType="submit">
-                            Submit
-                        </Button>
-                    </Form.Item>
-                </Form>
-
-            </Modal>
-        </>
-    );
+        <Modal visible={show} onCancel={(e) => { stopEventPropagation(e); close() }} closable={false} footer={null} width={width} bodyStyle={{ padding: 20}}>
+            <div onClick={stopEventPropagation}>
+                <Row className="modalCloseIconWrapper">
+                    <Col span={24}>
+                        <CloseOutlined onClick={(e) => { e.stopPropagation(); e.nativeEvent.stopImmediatePropagation(); close() }} />
+                    </Col>
+                </Row>
+                <Row className="modalContainer" style={{textAlign: textAlign}}>
+                    <Col span={24}>
+                        {
+                            !!title &&
+                            <Row className="modalTitleWrapper" style={{textAlign: textAlign === 'left' ? "center" : textAlign}}>
+                                <Col span={24}>
+                                    <Title className="modalTitle" level={3}>{title}</Title>
+                                </Col>
+                            </Row>
+                        }
+                        {
+                            !!description &&
+                            <Row className="modalParagraphWrapper" style={{textAlign: textAlign === 'left' ? "center" : textAlign}}>
+                                <Col span={24}>
+                                    <Paragraph className="modalParagraph">
+                                        {description}
+                                    </Paragraph>
+                                </Col>
+                            </Row>
+                        }
+                        {children}
+                        {
+                            (!!btnText && !!btnAction) &&
+                            <Row className="modalActionButtonWrapper">
+                                <Col span={24}>
+                                    <Button onClick={btnAction} className="modalActionButton">{btnText}</Button>
+                                </Col>
+                            </Row>
+                        }
+                    </Col>
+                </Row>
+            </div>
+        </Modal>
+    )
 }
-
 
 export default CustomModal;

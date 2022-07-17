@@ -2,9 +2,6 @@
     "compilerOptions": {
       "baseUrl": "./src",
       "paths": {
-        "@modules/*": [
-          "modules/*"
-        ],
         "@shared/*": [
           "shared/*"
         ],
@@ -38,7 +35,6 @@
       "isolatedModules": true,
       "types": [
         "node",
-        "jest"
       ],
       "typeRoots": [
         "./node_modules/@types",
@@ -49,10 +45,8 @@
       "node_modules"
     ],
     "include": [
-      "next-env.d.ts",
       "**/*.ts",
       "**/*.tsx",
-      "src/modules/api/auth/[...nextauth].js",
-      "src/App.ts"    
-, "hhhhhhhh/integration/init-spec.js", "cypress/fixtures/input.ts", "cypress/e2e/spec.cy.js", "cypress/support/commands.js"    ]
+      "src/App.ts"      
+    ]
 }
