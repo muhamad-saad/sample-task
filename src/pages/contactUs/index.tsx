@@ -4,7 +4,10 @@ import Container from '../../shared/components/container';
 import Input from '../../shared/components/input';
 import TextArea from '../../shared/components/textArea';
 import Modal from '../../shared/components/modal';
+import Spinner from '../../shared/components/spinner';
 import UseWindowSize from '../../shared/hooks/use-window-size'
+import { sendMail } from '../../shared/services/mailService';
+import { ShowNotification } from '../../shared/components/notification';
 import "./contactUs.css";
 
 const { Title, Text } = Typography;
@@ -13,9 +16,15 @@ const ContactUs:React.FC = () => {
     const {width} = UseWindowSize()
     const [form] = Form.useForm();
     const [showNeedHelp, setShowNeedHelp] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
 
-    const onFinish = (values: any) => {
-        console.log(values)
+    const onFinish = async (values: any) => {
+        setIsLoading(true)
+        const {status} = await sendMail(values)
+        setIsLoading(false)
+        status === 200 ? 
+        ShowNotification('success', "We have received your info, we will get back to you soon.", "Success"):
+        ShowNotification('error', "There is some error please try again later.", "Error")
     }
 
     const onReset = () => {
@@ -41,7 +50,7 @@ const ContactUs:React.FC = () => {
                         <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                             <Input 
                                 name="email" label="Email Address" placeholder='sam@gmail.com' required={true}
-                                errorMessage="Please add your email"
+                                type="email" errorMessage="Valid email is required"
                             />
                         </Col>
                     </Row>
@@ -61,7 +70,7 @@ const ContactUs:React.FC = () => {
                     <Row className="inputSection">
                         <Col xs={18} sm={24} md={12} lg={12} xl={12}>
                             <Button className='contactBtn' htmlType="submit">
-                                Send Message
+                                {isLoading? <Spinner /> : "Send Message"}
                             </Button>
                             <Text className='resetForm' onClick={onReset}>Reset Form</Text>
                         </Col>
