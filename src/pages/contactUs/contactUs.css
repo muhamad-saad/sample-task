@@ -1,0 +1,37 @@
+.contactFormContainer{
+    margin-top: 8% !important;
+    margin-bottom: 10% !important;
+}
+.inputSection{
+    margin-top: 3%;
+}
+.heading{
+    color: #463649;
+    text-align: center;
+    font-weight: bolder !important;
+}
+.resetForm{
+    color: #463649;
+    margin-left: 5%;
+    font-weight: 900;
+    text-decoration: underline;
+    cursor: pointer;
+}
+.needHelp{
+    color: #463649;
+    text-decoration: underline;
+    cursor: pointer;
+    float: right;
+}
+.contactBtn{
+    border-radius: 10px !important;
+    background-color: #cc8dff !important;
+    color: #fff !important;
+    padding: 0 1.25rem !important;
+    border: none !important;
+}
+.contactBtn:hover{
+    color: #fff !important;
+    background-color: #cc8dff !important;
+    border: none !important;
+}
