@@ -22,6 +22,7 @@ const ContactUs:React.FC = () => {
         setIsLoading(true)
         const {status} = await sendMail(values)
         setIsLoading(false)
+        form.resetFields();
         status === 200 ? 
         ShowNotification('success', "We have received your info, we will get back to you soon.", "Success"):
         ShowNotification('error', "There is some error please try again later.", "Error")
